@@ -2,6 +2,8 @@ package br.com.alura.gerenciador.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,7 @@ import br.com.alura.gerenciador.dao.UsuarioDAO;
 public class Login extends HttpServlet{
 
 	private static final long	serialVersionUID	= 1L;
+	private static Map<String,String> USUARIOS_LOGADOS = new HashMap<>();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,6 +36,12 @@ public class Login extends HttpServlet{
 			resp.addCookie(cookie);
 			writer.println("<html><body>Usuário logado: "+ email + "</body></html>");
 		}
+	}
+	
+	public String login(String usuario){
+		String codigo = System.currentTimeMillis() + "";
+		USUARIOS_LOGADOS.put(codigo, usuario);
+		return codigo;
 	}
 	
 }

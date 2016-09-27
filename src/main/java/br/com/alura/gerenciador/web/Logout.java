@@ -12,18 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = "/logout")
-public class Logout extends HttpServlet{
-
-	private static final long	serialVersionUID	= 1L;
+public class Logout implements Tarefa{
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public String executa(HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
-		session.removeAttribute("usuario.logado");
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/logout.html");
+		session.removeAttribute("usuarioLogado");
 		
-		dispatcher.forward(req, resp);
+		return "/WEB-INF/paginas/logout.html";
 	}
 }

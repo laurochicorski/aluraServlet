@@ -13,28 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.alura.gerenciador.Empresa;
 import br.com.alura.gerenciador.dao.EmpresaDAO;
 
-@WebServlet(urlPatterns = "/novaEmpresa")
-public class NovaEmpresa extends HttpServlet{
+public class NovaEmpresa implements Tarefa{
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public String executa(HttpServletRequest req, HttpServletResponse resp) {
 		String nome = req.getParameter("nome");
+		
 		Empresa empresa = new Empresa(nome);
 		new EmpresaDAO().adiciona(empresa);
 		
 		req.setAttribute("nome", nome);
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/novaEmpresa.jsp");
-		dispatcher.forward(req, resp);
+		return "/WEB-INF/paginas/novaEmpresa.jsp";
 	}
+
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String nome = req.getParameter("nome");
-		Empresa empresa = new Empresa(nome);
-		new EmpresaDAO().adiciona(empresa);
-		PrintWriter writer = resp.getWriter();
-		writer.println("<html><body>Empresa " + nome + " adicionada!</body></html>");
-	}
 	
 }

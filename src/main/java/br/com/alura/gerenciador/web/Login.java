@@ -28,15 +28,16 @@ public class Login extends HttpServlet{
 		String email = req.getParameter("email");
 		String senha = req.getParameter("senha");
 		Usuario usuario = new UsuarioDAO().buscaPorEmailESenha(email, senha);
+		
 		PrintWriter writer = resp.getWriter();
-		if (usuario == null) {
+		
+		if(usuario == null){
 			writer.println("<html><body>Usuario invalido</body></html>");
-		} else {
+		}else{
 			HttpSession session = req.getSession();
 			session.setAttribute("usuarioLogado", usuario);
-			writer.println("<html><body>Usuario logado: " + email + "</body></html>");
 		}
-
+		
 	}
 	
 	public String login(String usuario){

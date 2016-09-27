@@ -23,20 +23,20 @@ public class Login extends HttpServlet{
 	private static Map<String,String> USUARIOS_LOGADOS = new HashMap<>();
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		PrintWriter writer = resp.getWriter();
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String email = req.getParameter("email");
 		String senha = req.getParameter("senha");
-
 		Usuario usuario = new UsuarioDAO().buscaPorEmailESenha(email, senha);
-		
-		if(usuario == null){
-			writer.println("<html><body>Usuário ou senha inválida</body></html>");
-		}else{
+		PrintWriter writer = resp.getWriter();
+		if (usuario == null) {
+			writer.println("<html><body>Usuario invalido</body></html>");
+		} else {
 			HttpSession session = req.getSession();
-			session.setAttribute("usuario.logado", usuario);
-			writer.println("<html><body>Usuário logado: "+ email + "</body></html>");
+			session.setAttribute("usuarioLogado", usuario);
+			writer.println("<html><body>Usuario logado: " + email + "</body></html>");
 		}
+
 	}
 	
 	public String login(String usuario){

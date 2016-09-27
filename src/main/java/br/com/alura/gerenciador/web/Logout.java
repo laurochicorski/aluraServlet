@@ -3,6 +3,7 @@ package br.com.alura.gerenciador.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -21,16 +22,8 @@ public class Logout extends HttpServlet{
 		HttpSession session = req.getSession();
 		session.removeAttribute("usuario.logado");
 		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/logout.html");
 		
-//		Cookie cookie = new Cookies(req.getCookies()).getUsuarioLogado();
-//		
-//		if(cookie != null){
-//			cookie.setMaxAge(0);
-//			resp.addCookie(cookie);
-//		}
-		
-		PrintWriter writer = resp.getWriter();
-		writer.println("<html><body>Logout efetuado</body></html>");
-
+		dispatcher.forward(req, resp);
 	}
 }
